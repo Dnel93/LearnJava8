@@ -1,14 +1,18 @@
 package com.epam.cdp.m2.hw2.aggregator;
 
-import java.util.List;
-
 import javafx.util.Pair;
+
+import java.util.List;
 
 public class Java7Aggregator implements Aggregator {
 
     @Override
     public int sum(List<Integer> numbers) {
-        throw new UnsupportedOperationException();
+        int result = 0;
+        for(int number: numbers) {
+            result += number;
+        }
+        return result;
     }
 
     @Override
