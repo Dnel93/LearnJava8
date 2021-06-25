@@ -2,7 +2,11 @@ package com.epam.cdp.m2.hw2.aggregator;
 
 import javafx.util.Pair;
 
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Java8Aggregator implements Aggregator {
 
@@ -18,6 +22,14 @@ public class Java8Aggregator implements Aggregator {
 
     @Override
     public List<String> getDuplicates(List<String> words, long limit) {
-        throw new UnsupportedOperationException();
+        Set<String> uniqueValues = new HashSet<>();
+
+        return words
+                .stream()
+                .map(String::toUpperCase)
+                .sorted(Comparator.comparingInt(String::length).thenComparing(Comparator.naturalOrder()))
+                .filter(word -> !uniqueValues.add(word))
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 }
