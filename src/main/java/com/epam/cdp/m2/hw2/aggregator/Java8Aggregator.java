@@ -2,10 +2,8 @@ package com.epam.cdp.m2.hw2.aggregator;
 
 import javafx.util.Pair;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Java8Aggregator implements Aggregator {
@@ -17,7 +15,14 @@ public class Java8Aggregator implements Aggregator {
 
     @Override
     public List<Pair<String, Long>> getMostFrequentWords(List<String> words, long limit) {
-        throw new UnsupportedOperationException();
+        List<Pair<String, Long>> result = new ArrayList<>();
+
+        words.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .forEach((x, y) -> result.add(new Pair<>(x, y)));
+
+
+        return result.stream().limit(limit).collect(Collectors.toList());
     }
 
     @Override
