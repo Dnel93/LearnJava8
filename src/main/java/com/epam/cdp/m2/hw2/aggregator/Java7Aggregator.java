@@ -17,7 +17,30 @@ public class Java7Aggregator implements Aggregator {
 
     @Override
     public List<Pair<String, Long>> getMostFrequentWords(List<String> words, long limit) {
-        throw new UnsupportedOperationException();
+        List<Pair<String, Long>> result = new ArrayList<>();
+        HashMap<String, Long> validatedWords = new HashMap<>();
+
+        for (String word : words) {
+            if(validatedWords.containsKey(word)) {
+                long counter = validatedWords.get(word);
+                validatedWords.put(word, ++counter);
+            } else {
+                validatedWords.put(word, 1L);
+            }
+        }
+
+        for(Map.Entry<String, Long> entry: validatedWords.entrySet()) {
+            result.add(new Pair<>(entry.getKey(), entry.getValue()));
+        }
+
+        System.out.println(result);
+
+        if(limit >= result.size()) {
+            return result;
+        } else {
+            return result.subList(0, (int) limit);
+        }
+
     }
 
     @Override
